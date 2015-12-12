@@ -69,14 +69,27 @@ var hasSingleClass = function( elem, klass ) {
 };
 
 var findParentByClassName = function(element, targetClassName) {
-  var currElement = element;
-  do {
-    currElement = currElement.parentNode;
-    if (currElement === document) {
-      return null;
-    }  // don't go too far in case it can't be found!
+  var currElement = null;
+
+  if (element.parentNode) {
+    currElement = element;
+    do {
+      currElement = currElement.parentNode;
+      if (currElement === document) {
+        return null;
+      }  // don't go too far in case it can't be found!
+    }
+    while (!(hasSingleClass(currElement, targetClassName)));
+
+    if (currElement === null) {
+      alert('No parent found with that class name.');
+    }
+
+  } else {
+    alert('No parent found.');
   }
-  while (!(hasSingleClass(currElement, targetClassName)));
+
+
   return currElement;
 };
 
@@ -94,7 +107,7 @@ var findChildByClassName = function(element, targetClassName) {
   // recurse to search descendents
   for (idx = 0; idx < element.children.length; idx++) {
     var descendent = findChildByClassName(element.children[idx], targetClassName);
-    if (null !== descendent) {
+    if (descendent) {
       return descendent;
     }
   }
@@ -119,7 +132,7 @@ var getSongItemRichard = function(element) {
 
   // can't be efficient at this point...
   // just check among all children of common ancestor
-  if (null === songItem) {
+  if (songItem === null) {
     var commonAncestor;
     var commonTarget = 'album-view-song-item';
     if (hasSingleClass(element, commonTarget)) {
@@ -202,7 +215,7 @@ window.onload = function() {
     if (event.target.parentElement.className === 'album-view-song-item') {
       var songItem = getSongItem(event.target);
       var songItemNumber = songItem.getAttribute('data-song-number');
-      
+
       if (songItemNumber !== currentlyPlayingSong) {
         songItem.innerHTML = playButtonTemplate;
       }
