@@ -34,17 +34,16 @@ var createSongRow = function(songNumber, songName, songLength) {
     if (songNumber !== currentlyPlayingSongNumber) {
       $(this).find('.song-item-number').html(playButtonTemplate);
     }
-    $row.click(clickHandler);   // only establish when row has focus, so only one click handler present at a time
   };
 
   var offHover = function(event) {
     if (songNumber !== currentlyPlayingSongNumber) {
       $(this).find('.song-item-number').html(songNumber);
     }
-    $row.off('click');
   };
 
   $row.hover(onHover, offHover);
+  $row.click(clickHandler);   // moving this into onHover and offHover turned out to not work well after moving on to ckpt33
 
   return $row;
 };
