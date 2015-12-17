@@ -25,12 +25,6 @@ var createSongRow = function(songNumber, songName, songLength) {
     '</tr>'
   ;
 
-  var $row = $(template);
-
-  var clickHandler = function() {
-    updateCurrentlyPlayingSong(songNumber);
-  };
-
   var onHover = function(event) {
     if (songNumber !== currentlyPlayingSongNumber) {
       $(this).find('.song-item-number').html(playButtonTemplate);
@@ -42,6 +36,12 @@ var createSongRow = function(songNumber, songName, songLength) {
       $(this).find('.song-item-number').html(songNumber);
     }
   };
+
+  var clickHandler = function() {
+    updateCurrentlyPlayingSong(songNumber);
+  };
+
+  var $row = $(template);
 
   $row.hover(onHover, offHover);
   $row.click(clickHandler);
