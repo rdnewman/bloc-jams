@@ -70,10 +70,6 @@ var setCurrentAlbum = function(album) {
   }
 };
 
-var trackIndex = function(album, song) {
-   return album.songs.indexOf(song);
-};
-
 var updatePlayerBarSong = function() {
   var $parentElement = $('.currently-playing');
   var $playerBarButton = $('.main-controls .play-pause');
