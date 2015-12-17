@@ -24,26 +24,27 @@ var createSongRow = function(songNumber, songName, songLength) {
     '</tr>'
   ;
 
+  var $row = $(template);
+
+  var clickHandler = function() {
+    updateCurrentlyPlayingSong(songNumber);
+  };
+
   var onHover = function(event) {
     if (songNumber !== currentlyPlayingSongNumber) {
       $(this).find('.song-item-number').html(playButtonTemplate);
     }
+    $row.click(clickHandler);   // only establish when row has focus, so only one click handler present at a time
   };
 
   var offHover = function(event) {
     if (songNumber !== currentlyPlayingSongNumber) {
       $(this).find('.song-item-number').html(songNumber);
     }
+    $row.off('click');
   };
-
-  var clickHandler = function() {
-    updateCurrentlyPlayingSong(songNumber);
-  };
-
-  var $row = $(template);
 
   $row.hover(onHover, offHover);
-  $row.click(clickHandler);
 
   return $row;
 };
